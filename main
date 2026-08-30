@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Чир спорт | Кронверкские Барсы ИТМО</title>
+  
+  <!-- Шрифты: Дерзкий спортивный Oswald (в стиле постеров Барсов) + удобный Montserrat -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Oswald:wght@600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --navy-deep: #001233;
+      --navy-bars: #00205B;   /* Pantone 281 C */
+      --blue-accent: #62B5E5; /* Pantone 2915 C */
+      --blue-glow: rgba(98, 181, 229, 0.4);
+      --white: #FFFFFF;
+      --glass-bg: rgba(0, 18, 51, 0.78);
+      --glass-border: rgba(98, 181, 229, 0.35);
+      --radius-main: 16px;
+      --radius-sm: 10px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      color: var(--white);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px 14px;
+      position: relative;
+      background-color: var(--navy-deep);
+      overflow-x: hidden;
+    }
+
+    /* Фоновое живое фото с глубоким синим наложением в стилистике афиш */
+    .bg-image-layer {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      /* Сюда можно поставить фото команды, например bg.jpg */
+      background-image: url('https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?q=80&w=1600&auto=format&fit=crop');
+      background-size: cover;
+      background-position: center 30%;
+      filter: saturate(1.2) contrast(1.1);
+      z-index: 0;
+    }
+
+    .bg-gradient-overlay {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: radial-gradient(circle at 50% 20%, rgba(0, 32, 91, 0.65) 0%, rgba(0, 14, 40, 0.94) 80%);
+      backdrop-filter: blur(4px);
+      z-index: 1;
+    }
+
+    /* Геометрические паттерны кронверка на фоне */
+    .bg-shapes {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-image: radial-gradient(rgba(98, 181, 229, 0.25) 1.5px, transparent 1.5px);
+      background-size: 32px 32px;
+      opacity: 0.4;
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    .container {
+      position: relative;
+      z-index: 10;
+      width: 100%;
+      max-width: 660px;
+      background: var(--glass-bg);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border: 1.5px solid var(--glass-border);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), 0 0 30px rgba(98, 181, 229, 0.2);
+      border-radius: var(--radius-main);
+      padding: 34px 24px;
+      text-align: center;
+      animation: fadeIn 0.4s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Верхняя фирменная плашка */
+    .top-badge-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .kronverk-tag {
+      background: linear-gradient(135deg, #62B5E5, #358ec4);
+      color: var(--navy-deep);
+      font-family: 'Oswald', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: 5px 14px;
+      border-radius: 6px;
+      box-shadow: 0 4px 10px rgba(98, 181, 229, 0.3);
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Oswald', sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+    }
+
+    h1 {
+      font-size: 34px;
+      line-height: 1.15;
+      margin-bottom: 12px;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+    }
+
+    h1 span {
+      color: var(--blue-accent);
+      text-shadow: 0 0 16px var(--blue-glow);
+    }
+
+    p.subtitle {
+      font-size: 15px;
+      color: #e0effa;
+      line-height: 1.55;
+      margin-bottom: 24px;
+    }
+
+    /* Кнопки в стиле Барсов */
+    .btn {
+      font-family: 'Oswald', sans-serif;
+      font-size: 18px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      background: linear-gradient(135deg, #62B5E5 0%, #449fd4 100%);
+      color: var(--navy-deep);
+      border: none;
+      padding: 13px 28px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      font-weight: 700;
+      transition: all 0.25s ease;
+      display: inline-block;
+      text-decoration: none;
+      box-shadow: 0 6px 18px rgba(98, 181, 229, 0.4);
+    }
+
+    .btn:hover {
+      background: #ffffff;
+      color: var(--navy-bars);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(255, 255, 255, 0.5);
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--blue-accent);
+      border: 1.5px solid var(--glass-border);
+      box-shadow: none;
+    }
+
+    .btn-secondary:hover {
+      background: rgba(98, 181, 229, 0.2);
+      border-color: var(--blue-accent);
+      color: #ffffff;
+    }
+
+    /* Прогресс-бар */
+    .progress-box {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid var(--glass-border);
+      height: 7px;
+      border-radius: 10px;
+      margin-bottom: 22px;
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #358ec4, #62B5E5);
+      box-shadow: 0 0 10px var(--blue-accent);
+      transition: width 0.3s ease;
+    }
+
+    .step-counter {
+      font-family: 'Oswald', sans-serif;
+      font-size: 13px;
+      color: var(--blue-accent);
+      letter-spacing: 1.5px;
+      margin-bottom: 8px;
+      text-align: left;
+    }
+
+    .question-title {
+      font-size: 21px;
+      margin-bottom: 20px;
+      text-align: left;
+      line-height: 1.35;
+    }
+
+    /* Варианты ответов */
+    .options-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .option-card {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--glass-border);
+      padding: 15px 18px;
+      border-radius: var(--radius-sm);
+      text-align: left;
+      font-size: 15px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      line-height: 1.35;
+    }
+
+    .option-card:hover {
+      background: rgba(98, 181, 229, 0.22);
+      border-color: var(--blue-accent);
+      transform: translateX(4px);
+      box-shadow: 0 4px 14px rgba(98, 181, 229, 0.25);
+    }
+
+    .option-bullet {
+      width: 10px;
+      height: 10px;
+      border-radius: 3px;
+      background: var(--blue-accent);
+      transform: rotate(45deg);
+      flex-shrink: 0;
+    }
+
+    /* Карточка результата с фотографией */
+    .result-photo-container {
+      width: 100%;
+      height: 210px;
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      margin-bottom: 16px;
+      border: 1px solid var(--glass-border);
+      position: relative;
+    }
+
+    .result-photo-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.4s ease;
+    }
+
+    .result-photo-container:hover img {
+      transform: scale(1.04);
+    }
+
+    .result-photo-overlay {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 50%;
+      background: linear-gradient(to top, var(--navy-deep), transparent);
+    }
+
+    .result-badge {
+      background: var(--blue-accent);
+      color: var(--navy-deep);
+      display: inline-block;
+      padding: 4px 14px;
+      font-family: 'Oswald', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+      border-radius: 4px;
+    }
+
+    .result-title {
+      font-size: 28px;
+      color: var(--blue-accent);
+      margin-bottom: 14px;
+      text-shadow: 0 0 14px var(--blue-glow);
+    }
+
+    .info-card {
+      background: rgba(0, 14, 38, 0.7);
+      border: 1px solid var(--glass-border);
+      padding: 20px 18px;
+      border-radius: var(--radius-sm);
+      text-align: left;
+      margin-bottom: 22px;
+      font-size: 14px;
+      line-height: 1.55;
+      color: #e5f2fc;
+    }
+
+    .info-card h4 {
+      color: var(--blue-accent);
+      font-size: 15px;
+      margin-top: 14px;
+      margin-bottom: 6px;
+    }
+
+    .info-card h4:first-child {
+      margin-top: 0;
+    }
+
+    .info-card ul {
+      margin-left: 18px;
+      margin-bottom: 8px;
+    }
+
+    .info-card li {
+      margin-bottom: 3px;
+    }
+
+    .coach-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(98, 181, 229, 0.15);
+      border-left: 3px solid var(--blue-accent);
+      padding: 8px 12px;
+      margin: 10px 0;
+      font-weight: 600;
+      color: #fff;
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    }
+
+    /* Список всех направлений */
+    .all-sections-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 18px;
+      text-align: left;
+    }
+
+    .section-tab-btn {
+      width: 100%;
+      text-align: left;
+      padding: 14px 18px;
+      background: rgba(255, 255, 255, 0.06);
+      color: #fff;
+      border: 1px solid var(--glass-border);
+      cursor: pointer;
+      font-family: 'Oswald', sans-serif;
+      font-size: 17px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-radius: var(--radius-sm);
+      transition: background 0.2s ease;
+    }
+
+    .section-tab-btn:hover {
+      background: rgba(98, 181, 229, 0.2);
+    }
+
+    .section-tab-content {
+      padding: 18px;
+      background: rgba(0, 14, 38, 0.75);
+      border: 1px solid var(--glass-border);
+      border-top: none;
+      border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+      font-size: 14px;
+      line-height: 1.55;
+    }
+
+    .footer-note {
+      margin-top: 22px;
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.55);
+      letter-spacing: 0.5px;
+    }
+
+    .hide { display: none; }
+  </style>
+</head>
+<body>
+
+  <!-- Задний живой фон -->
+  <div class="bg-image-layer"></div>
+  <div class="bg-gradient-overlay"></div>
+  <div class="bg-shapes"></div>
+
+  <div class="container">
+    
+    <!-- СТАРТОВЫЙ ЭКРАН -->
+    <div id="screen-start">
+      <div class="top-badge-row">
+        <div class="kronverk-tag">СТАНЬ ЧАСТЬЮ KRONBARS</div>
+      </div>
+      <h1>ТВОЙ ПУТЬ В <span>ЧИР СПОРТ</span></h1>
+      <p class="subtitle">Ответь на 6 простых вопросов и найди свой идеальный чир!</p>
+      
+      <div style="display: flex; flex-direction: column; gap: 10px; max-width: 310px; margin: 0 auto;">
+        <button class="btn" onclick="startQuiz()">Пройти тест</button>
+        <button class="btn btn-secondary" onclick="showAllSections()">Все направления</button>
+      </div>
+    </div>
+
+    <!-- ЭКРАН ВОПРОСА -->
+    <div id="screen-quiz" class="hide">
+      <div class="step-counter" id="step-counter">ВОПРОС 1 ИЗ 6</div>
+      <div class="progress-box">
+        <div class="progress-bar" id="progress-bar"></div>
+      </div>
+      <h2 class="question-title" id="question-text"></h2>
+      <div class="options-list" id="options-container"></div>
+    </div>
+
+    <!-- ЭКРАН РЕЗУЛЬТАТА -->
+    <div id="screen-result" class="hide">
+      <div class="result-badge">Твое направление</div>
+      <h2 class="result-title" id="res-title"></h2>
+
+      <!-- Фото карточка сборной -->
+      <div class="result-photo-container">
+        <img id="res-img" src="" alt="Чир спорт ИТМО">
+        <div class="result-photo-overlay"></div>
+      </div>
+
+      <div class="info-card" id="res-content"></div>
+      
+      <div style="display: flex; flex-direction: column; gap: 10px; max-width: 320px; margin: 0 auto;">
+        <!-- Ссылка на отборы -->
+        <a href="https://vk.ru/kb_cheer" target="_blank" class="btn">Прийти на отбор 🔥</a>
+        <button class="btn btn-secondary" onclick="showAllSections()">Посмотреть другие сборные</button>
+        <button class="btn btn-secondary" style="border: none; font-size: 14px;" onclick="startQuiz()">Пройти заново</button>
+      </div>
+    </div>
+
+    <!-- ЭКРАН ВСЕХ НАПРАВЛЕНИЙ -->
+    <div id="screen-all" class="hide">
+      <div class="top-badge-row">
+        <div class="kronverk-tag">Сборные команды клуба</div>
+      </div>
+      <h1>ВСЕ НАПРАВЛЕНИЯ</h1>
+      <p class="subtitle" style="margin-bottom: 14px;">Познакомься со всеми направлениями, тренерами и отборами:</p>
+
+      <div class="all-sections-grid" id="all-sections-list"></div>
+
+      <div style="margin-top: 22px;">
+        <button class="btn" onclick="startQuiz()">Пройти тест</button>
+      </div>
+    </div>
+
+    <div class="footer-note">Студенческий спортивный клуб «Кронверкские барсы» • Университет ИТМО</div>
+  </div>
+
+  <script>
+    // Данные по сборным: тексты + фотографии
+    // Можешь заменить URL картинок на свои локальные файлы (например: 'img/jazz.jpg')
+    const directionsData = {
+      perf: {
+        name: "Чир Перфоманс",
+        image: img/jazz.jpg,
+        content: `
+          <p>ТВОЯ СТИХИЯ - ПЕРФОМАНС </p>
+          
+          <div class="coach-badge">👩‍🏫 Тренер: Надежда Кулемина 🔥</div>
+
+          <h4>💥 Дисциплины:</h4>
+          <ul>
+            <li><strong>Чир Фристайл</strong> — динамичная команда с помпонами, сильными руками и мощными элементами;</li>
+            <li><strong>Чир Джаз</strong> — сочетание джазовых танцев, модерна и элегантных элементов</li>
+          </ul>
+
+          <h4>📌 Форматы выступлений:</h4>
+          <ul>
+            <li>💙 Группа (16–24 человека)</li>
+            <li>💙 Двойка (2 человека)</li>
+          </ul>
+
+          <h4>🔎 Кого мы ищем:</h4>
+          <ul>
+            <li>Девушек и парней с танцевальным или спортивным прошлым;</li>
+            <li>Акробатика и импровизация будут большим плюсом;</li>
+          </ul>
+        `
+      },
+      mix: {
+        name: "Чир Микс (Акробатика)",
+        image: img/mix.jpg,
+        content: `
+          <p>Акробатическое направление: сила, гибкость, синхронность и командный дух. Не просто прыжки — целое шоу на соревновательном ковре!</p>
+          
+          <div class="coach-badge">👨‍🏫 Тренер: Дмитрий Ткачук 😍</div>
+
+          <h4>✨ В программе микса:</h4>
+          <ul>
+            <li><strong>Станты</strong> — поддержки и элементы на высоте;</li>
+            <li><strong>Пирамиды</strong> — конструкции из людей, от которых захватывает дух;</li>
+            <li><strong>Тоссы</strong> — спортсмен буквально летит в воздухе;</li>
+            <li><strong>Акробатика</strong> — фляки, перевороты, сальто;</li>
+            <li><strong>Кричалки</strong> — мощнейший заряд энергии на весь зал!</li>
+          </ul>
+
+          <h4>📌 Форматы соревнований:</h4>
+          <ul>
+            <li>🏆 Смешанные команды (16–24 человека)</li>
+            <li>💪 Групповые станты (4–5 человек)</li>
+            <li>⚡️ Партнёрские станты (2 человека)</li>
+          </ul>
+
+          <h4>🔎 Кого мы ищем:</h4>
+          <ul>
+            <li>👩 <strong>Девушек</strong> с акробатической подготовкой (весом до 50 кг);</li>
+            <li>👨 <strong>Парней</strong> с физической и/или акробатической базой (весом от 65 кг);</li>
+            <li>⚡️ Готовность выкладываться на 100% и доверять напарникам.</li>
+          </ul>
+        `
+      },
+      hiphop: {
+        name: "Чир Хип-Хоп",
+        image: img/hop.jpg,
+        content: `
+          <p>Зажигалочки клуба! Участвуем и побеждаем на городских и всероссийских чемпионатах, выступаем в танцевальных проектах и трижды в неделю выкладываемся на тренировках на все 💯.</p>
+          
+          <div class="coach-badge">👩‍🏫 Тренеры: Анастасия Соловейчик и Маргарита Аникина</div>
+
+          <h4>🔹 Стили в танце:</h4>
+          <p>Хип-хоп, локинг, крамп, паппинг, брейкинг и джаз-фанк.</p>
+
+          <h4>📌 Форматы выступлений:</h4>
+          <ul>
+            <li>Большая команда (до 24 человек);</li>
+            <li>Формат двоек и соло.</li>
+          </ul>
+
+          <h4>🔎 Кого мы ищем:</h4>
+          <ul>
+            <li>Парней и девушек с танцевальным опытом;</li>
+            <li>Акробатическая база и чувство импровизации станут крутым плюсом.</li>
+          </ul>
+        `
+      },
+      support: {
+        name: "Группа Поддержки",
+        image: img/hp.jpg,
+        content: `
+          <p>Если твоя мечта — быть тем самым чирлидером из фильмов, создавать праздник и заряжать трибуны, тебе сюда! 🔥</p>
+
+          <div class="coach-badge">👩‍🏫 Тренер: Камиля Шарифуллина</div>
+          
+          <h4>🎉 Где мы выступаем:</h4>
+          <p>Создаём атмосферу на матчах сборных ИТМО, а также выступаем приглашенными танцорами на крупных событиях Петербурга — например, на играх супер-лиги «Динамо ЛО»!</p>
+
+          <h4>🔎 Кого мы ищем:</h4>
+          <ul>
+            <li>И девушек, и парней;</li>
+            <li>Главное — желание, яркие эмоции, пластика и командный дух! 🐾</li>
+          </ul>
+        `
+      }
+    };
+
+    // 6 емких вопросов
+    const questions = [
+      {
+        text: "1. Твой спортивный или танцевальный опыт:",
+        options: [
+          { text: "Художественная гимнастика", scores: { perf: 3 } },
+          { text: "Акробатика, спортивная гимнастика", scores: { mix: 3 } },
+          { text: "Танцы", scores: { hiphop: 2, perf: 1 } },
+          { text: "Ничем из этого не занимался(-ась)", scores: { support: 3, perf: 1 } }
+        ]
+      },
+      {
+        text: "2. Что тебе ближе по формату?",
+        options: [
+          { text: "Большая команда и синхронность", scores: { perf: 2, hiphop: 2, support: 1 } },
+          { text: "Работа в паре", scores: { mix: 3, perf: 1 } },
+          { text: "Соло и личный стиль", scores: { hiphop: 3 } }
+        ]
+      },
+      {
+        text: "3. Твоя главная цель в секции:",
+        options: [
+          { text: "Вайб, тусовка и выступления на матчах ИТМО", scores: { support: 4 } },
+          { text: "Большой спорт, чемпионаты и разряды", scores: { mix: 2, perf: 2, hiphop: 2 } }
+        ]
+      },
+      {
+        text: "4. Что больше привлекает в движениях?",
+        options: [
+          { text: "поддержки и трюки", scores: { mix: 3 } },
+          { text: "Гибкость и вращения", scores: { perf: 3 } },
+          { text: "стиль и мощность подачи", scores: { hiphop: 3 } },
+          { text: "Энергичный танец и контакт с залом", scores: { support: 3 } }
+        ]
+      },
+      {
+        text: "5. Какая музыка тебя больше заряжает?",
+        options: [
+          { text: "Хип-хоп, трэп, R&B", scores: { hiphop: 3 } },
+          { text: "Поп-хиты и тренды", scores: { support: 2, perf: 2 } },
+          { text: "EDM, рок или мощный бас", scores: { mix: 3 } }
+        ]
+      },
+      {
+        text: "6. Твое отношение к высоте и полетам:",
+        options: [
+          { text: "Обожаю экстрим и адреналин", scores: { mix: 3 } },
+          { text: "Лучше уверенно стоять на ногах", scores: { perf: 2, hiphop: 2, support: 2 } }
+        ]
+      }
+    ];
+
+    let currentQ = 0;
+    let scores = { mix: 0, perf: 0, hiphop: 0, support: 0 };
+
+    function hideAllScreens() {
+      document.getElementById('screen-start').classList.add('hide');
+      document.getElementById('screen-quiz').classList.add('hide');
+      document.getElementById('screen-result').classList.add('hide');
+      document.getElementById('screen-all').classList.add('hide');
+    }
+
+    function startQuiz() {
+      hideAllScreens();
+      document.getElementById('screen-quiz').classList.remove('hide');
+      currentQ = 0;
+      scores = { mix: 0, perf: 0, hiphop: 0, support: 0 };
+      showQuestion();
+    }
+
+    function showQuestion() {
+      const q = questions[currentQ];
+      document.getElementById('step-counter').innerText = `ВОПРОС ${currentQ + 1} ИЗ ${questions.length}`;
+      document.getElementById('progress-bar').style.width = `${((currentQ + 1) / questions.length) * 100}%`;
+      document.getElementById('question-text').innerText = q.text;
+
+      const container = document.getElementById('options-container');
+      container.innerHTML = '';
+
+      q.options.forEach(opt => {
+        const btn = document.createElement('div');
+        btn.className = 'option-card';
+        btn.innerHTML = `<div class="option-bullet"></div><span>${opt.text}</span>`;
+        btn.onclick = () => selectOption(opt.scores);
+        container.appendChild(btn);
+      });
+    }
+
+    function selectOption(optScores) {
+      for (const [key, val] of Object.entries(optScores)) {
+        scores[key] += val;
+      }
+
+      currentQ++;
+      if (currentQ < questions.length) {
+        showQuestion();
+      } else {
+        showResult();
+      }
+    }
+
+    function showResult() {
+      hideAllScreens();
+      document.getElementById('screen-result').classList.remove('hide');
+
+      let maxKey = 'perf';
+      let maxScore = -1;
+      for (const [key, val] of Object.entries(scores)) {
+        if (val > maxScore) {
+          maxScore = val;
+          maxKey = key;
+        }
+      }
+
+      const res = directionsData[maxKey];
+      document.getElementById('res-title').innerText = res.name;
+      document.getElementById('res-img').src = res.image;
+      document.getElementById('res-content').innerHTML = res.content;
+    }
+
+    function showAllSections() {
+      hideAllScreens();
+      document.getElementById('screen-all').classList.remove('hide');
+
+      const container = document.getElementById('all-sections-list');
+      container.innerHTML = '';
+
+      for (const [key, item] of Object.entries(directionsData)) {
+        const wrap = document.createElement('div');
+        wrap.innerHTML = `
+          <button class="section-tab-btn" onclick="toggleSection('${key}')">
+            <span>${item.name}</span>
+            <span style="font-size: 13px; color: var(--blue-accent);">▼</span>
+          </button>
+          <div class="section-tab-content hide" id="sec-content-${key}">
+            <div style="width: 100%; height: 160px; border-radius: 8px; overflow: hidden; margin-bottom: 12px;">
+              <img src="${item.image}" style="width: 100%; height: 100%; object-fit: cover;" alt="${item.name}">
+            </div>
+            ${item.content}
+          </div>
+        `;
+        container.appendChild(wrap);
+      }
+    }
+
+    function toggleSection(key) {
+      const el = document.getElementById(`sec-content-${key}`);
+      el.classList.toggle('hide');
+    }
+  </script>
+</body>
+</html>
